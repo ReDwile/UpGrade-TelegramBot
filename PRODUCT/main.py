@@ -3,7 +3,7 @@ import telebot
 from algorithms import *
 from read_database import *
 
-token = '1040119013:AAGxdmsbeqn0P2tpYY_t6OO-oVIXdeLTIFM'
+token = ''
 bot = telebot.TeleBot(f'{token}')
 
 @bot.message_handler(content_types=['text'])
