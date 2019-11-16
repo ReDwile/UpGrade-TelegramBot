@@ -1,0 +1,2 @@
+Добавить телеграм-токен бота в 'UpGrade-TelegramBot/IN WORK/token_public.py'
+Добавить telegram-id администратора в 'UpGrade-TelegramBot/IN WORK/data/admin.txt'
