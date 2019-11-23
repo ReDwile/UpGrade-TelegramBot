@@ -1,1 +1,1 @@
-id><False
+Напиши telegram-id admin'a><False
