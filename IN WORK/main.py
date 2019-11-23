@@ -3,8 +3,8 @@ import telebot
 from algorithms import *
 from read_database import *
 
-from token_public import *
-#from token_private import *
+#from token_public import *
+from token_private import *
 
 bot = telebot.TeleBot(f'{token}')
 
@@ -30,7 +30,7 @@ def admin(message):
         bot.send_message(message.from_user.id, text='Напиши сообщение, которое будет разосланно всем зарегистрированным участникам:')
         bot.register_next_step_handler(message, sendmessage)
     elif message.text == '/begin': #Запускает алгоритм распределения по командам
-        array_error = error_len() #Возвращает [('name1', 'surname1', 'id'),(),()] - людей, у которых ошибка в веденных дынных
+        array_error = error_len() #Возвращает [('name1', 'surname1', 'id'),(),()] - людей, у которых ошибка в веденных данных
         if len(array_error) == 0:
             begin_algo_2(message)
         else:
@@ -74,7 +74,7 @@ def replacement(message):
             bot.send_message(message.from_user.id, text='Информация о тебе удалена. Если все же захочешь участвовать в Random Coffee на это недели, напиши /registration')
     else:
         try:
-            bot.send_message(message.from_user.id, text=f'Ты зарегистрирован на Random Coffee этой недели\nТекущая сохраненная информация о тебе:\n{person_info(message.from_user.id)}\n/replacement - если хочешь обновить информацио о себе\n/remove - если не хочешь участвовать на этой недели в Random Coffee')
+            bot.send_message(message.from_user.id, text=f'Ты зарегистрирован на Random Coffee на этой недели\nТекущая сохраненная информация о тебе:\n{person_info(message.from_user.id)}\n/replacement - если хочешь обновить информацио о себе\n/remove - если не хочешь участвовать на этой недели в Random Coffee')
         except:
             bot.send_message(message.from_user.id, text='Ошибка записи в Базу Данных. Напиши @redwile об ошибке и пройди заного регистрацию, написав /replacement')
 
@@ -99,15 +99,18 @@ def lastname(message):
 def job(message):
     job = message.text
     insert_register(job, message.from_user.id)
-    bot.send_message(message.from_user.id, text='Опиши теперь чем ты увлекаешься (свои хобби)')
+    bot.send_message(message.from_user.id, text='Теперь опиши, чем ты увлекаешься')
     bot.register_next_step_handler(message, hobby)
 
 def hobby(message):
     hobby = message.text
     insert_register(hobby, message.from_user.id)
-    bot.send_message(message.from_user.id, text=f'Сохраненная информация:\n{person_info(message.from_user.id)}')
-    bot.send_message(message.from_user.id, text='Спасибо за регистрацию\nЭта информация будет отправлена твоему будущему партнеру по Random coffee\nЖди даты окончания регистрации, тебе придет сообщение с информацией твоего парнера))')
-    bot.send_message(message.from_user.id, text='/replacement - если хочешь изменить информацио о себе')
+    try:
+        bot.send_message(message.from_user.id, text=f'Сохраненная информация:\n{person_info(message.from_user.id)}')
+        bot.send_message(message.from_user.id, text='Спасибо за регистрацию\nЭта информация будет отправлена твоему будущему партнеру по Random coffee\nЖди даты окончания регистрации: тебе придет сообщение с информацией твоего парнера))')
+        bot.send_message(message.from_user.id, text='/replacement - если хочешь изменить информацио о себе')
+    except:
+        bot.send_message(message.from_user.id, text='Произошла ошибка, тебе нужно написать /replacement, для того, чтобы изменить обновить информацию о себе')
 
 def send_person_message(array): #Рассылает участникам сообщения о парах (в массиве есть массив из id участников, находящихся в одной группе)
     for group in array:
@@ -142,7 +145,7 @@ def check_error(message):
         array_error = error_len() #Возвращает [('name1', 'surname1', 'id'),(),()] - людей, у которых ошибка в веденных дынных
         for name, surname, id_person in array_error:
             remove_person(int(id_person))
-        begin_algo(message)
+        begin_algo_2(message)
     else:
         admin(message)
 
