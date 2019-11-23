@@ -89,6 +89,11 @@ def error_len(): #Возвращает [('name1', 'surname1', 'id'),(),()] - л�
         for person_str in file:
             array = person_str.split('><')
             if len(array) != 6:
-                info_tuple = [array[1], array[2], int(array[0])]
+                info_tuple = [array[1]]
+                try:
+                    info_tuple.append(array[2])
+                except:
+                    info_tuple.append('(Не успел написать фамилию)')
+                info_tuple.append(int(array[0]))
                 persons.append(info_tuple)
     return persons
