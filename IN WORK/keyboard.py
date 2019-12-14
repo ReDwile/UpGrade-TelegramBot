@@ -6,8 +6,8 @@ key1 = telebot.types.ReplyKeyboardMarkup(True, True, True)
 key1.row('remove', 'about', 'replacement')
 
 #continue
-key2 = telebot.types.ReplyKeyboardMarkup(True)
-key2.row('continue')
+key2 = telebot.types.ReplyKeyboardMarkup(True, True)
+key2.row('continue', 'begin')
 
 #change, begin, help, send, info
 key3 = telebot.types.ReplyKeyboardMarkup(True, True, True, True)
@@ -32,7 +32,6 @@ key7.row('replacement', 'info')
 #change
 key8 = telebot.types.ReplyKeyboardMarkup(True)
 key8.row('change')
-
 
 
 
