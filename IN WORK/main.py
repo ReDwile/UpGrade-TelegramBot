@@ -1,8 +1,7 @@
 import telebot
 
 #admin_id
-#Katy id: 177568456
-#My id: 398373557
+
 
 from algorithms import *
 from read_database import *
@@ -10,7 +9,6 @@ from keyboard import *
 
 #from token_public import *
 #from token_private import *
-token = '898041132:AAE-4SoSIevbnt-MeK8ffjAf8MTGCGxMr78'
 
 bot = telebot.TeleBot(f'{token}')
 
