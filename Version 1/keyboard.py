@@ -37,3 +37,17 @@ key_registration_end.row('Изменить все')
 
 key_compliment = telebot.types.ReplyKeyboardMarkup()
 key_compliment.row('Принять поздравления!')
+
+key_person = telebot.types.ReplyKeyboardMarkup(True)
+key_person.row('Посмотреть сохраненные данные')
+key_person.row('Изменить данные')
+key_person.row('Удалить мои данные')
+
+key_select_changes = telebot.types.ReplyKeyboardMarkup(True)
+key_select_changes.row('Посмотреть данные')
+key_select_changes.row("Изменить имя")
+key_select_changes.row('Изменить фамилию')
+key_select_changes.row('Изменить инфу о хобби')
+key_select_changes.row('Изменить инфу о работе')
+key_select_changes.row('Изменить все')
+key_select_changes.row('Назад')

@@ -4,12 +4,14 @@ import telebot
 from telebot import types
 
 from classes import *
-from database import *
+from algorithms import *
 from keyboard import *
 
 token = ''
 
 bot = telebot.TeleBot(f'{token}')
+
+#person = creating_saved_objects()
 
 @bot.message_handler(content_types=['text'])
 def start(message):
@@ -36,7 +38,24 @@ def noname(message):
 
 #Если пользователь уже зареган
 def person(message):
-    pass
+    if message.text == 'Посмотреть сохраненные данные':
+        data = get_info(message.from_user.id, 'all')
+        name = data['name']
+        surname = data['surname']
+        username = data['username']
+        hobby = data['hobby']
+        job = data['job']
+        bot.send_message(message.from_user.id, text=f'Данные, которые сохранены в бд:\nИмя: {name}\nФамилия: {surname}\nUserName: {username}\nИнтересы: {hobby}\nПрофессиональные интересы: {job}', reply_markup=key_person)
+    elif message.text == 'Изменить данные':
+        bot.send_message(message.from_user.id, text = 'Что именно хочешь изменить?', reply_markup=key_select_changes)
+        bot.register_next_step_handler(message, registration_7)
+    elif message.text == 'Удалить мои данные':
+        #Удаляет все данные пользователя по id
+        delete_data(message.from_user.id)
+        bot.send_message(message.from_user.id, text='Ваши данные успешно удалены\n/start')
+    else:
+        bot.send_message(message.from_user.id, text='Выбери, что хочешь сделать', reply_markup=key_person)
+
 
 #Если это администратор
 def admin(message):
@@ -223,6 +242,17 @@ def registration_7(message):
         bot.register_next_step_handler(message, edit_hobby)
     elif message.text == 'Изменить все':
         registration_1(message)
+    elif message.text == 'Посмотреть данные':
+        data = get_info(message.from_user.id, 'all')
+        name = data['name']
+        surname = data['surname']
+        username = data['username']
+        hobby = data['hobby']
+        job = data['job']
+        bot.send_message(message.from_user.id, text=f'Данные, которые сохранены в бд:\nИмя: {name}\nФамилия: {surname}\nUserName: {username}\nИнтересы: {hobby}\nПрофессиональные интересы: {job}', reply_markup=key_select_changes)
+        bot.register_next_step_handler(message, registration_7)
+    elif message.text == 'Назад':
+        person(message)
     else:
         id_person = message.from_user.id
         name = get_info(id_person, 'name')
@@ -251,8 +281,6 @@ def edit_hobby(message):
     add_info(message.from_user.id, 'hobby', message.text)
     message.text = 'Да'
     registration_6(message)
-
-    
     
     
 bot.polling(none_stop=True, interval=0)

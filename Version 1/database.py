@@ -78,4 +78,20 @@ def add_info(id_person, status, value):
     sheet.cell(row=row_person, column=column_status).value = str(value)
     wb.save('persons_data.xlsx')
     
+#По id пользователя удаляет все данные из бд
+def delete_data(id_person):
+    wb = openpyxl.load_workbook(filename = 'persons_data.xlsx')
+    sheet = wb['person']
+    
+    #Найдем строчку, в которой расположена информация о пользователе
+    for i in range(2, sheet.max_row+1):
+        id_person_db = sheet.cell(row=i, column=1).value
+        if id_person_db == id_person:
+            row_person = i
+            break
+            
+    #Удаляем данные
+    for i in range(1, sheet.max_column+1):
+        sheet.cell(row=row_person, column=i).value = None
+    wb.save('persons_data.xlsx')
     
